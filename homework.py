@@ -5,7 +5,7 @@ import datetime as dt
 
 '''
 -----------------------
-    Main Calculator
+    Main сalculator
 -----------------------
 '''
 class Calculator:
@@ -55,7 +55,7 @@ class Record:
 
 '''
 ---------------------------
-    Calculator for Cash
+    Calculator for сash
 ---------------------------
 '''
 class CashCalculator(Calculator):
@@ -88,15 +88,23 @@ class CashCalculator(Calculator):
 
 '''
 -------------------------------
-    Calculator for Calories
+    Calculator for сalories
 -------------------------------
 '''
 class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         calories_remained = self.limit - self.get_today_stats()
         if self.get_today_stats() <= self.limit:
-            return f'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {calories_remained} кКал'
+            return ('Сегодня можно съесть что-нибудь ещё, '
+            f'но с общей калорийностью не более {calories_remained} кКал')
         else:
-            return f'Хватит есть!'
+            return 'Хватит есть!'
 
 
+
+
+if __name__ == '__main__':
+
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
