@@ -11,19 +11,18 @@ class Calculator:
     def add_record(self, record):
         self.records.append(record)
 
-    def get_sum_date(self, day=None):
+    def get_sum_date(self, day):
         date_now = dt.date.today()
         laft_week = date_now - dt.timedelta(days=day)
         return sum(
             i.amount
             for i in self.records
-            if i.date == date_now
-            if laft_week <= i.date <= date_now
+            if laft_week < i.date <= date_now
         )
         
 
     def get_today_stats(self):
-        return self.get_sum_date()
+        return self.get_sum_date(1)
 
     def get_week_stats(self):
         return self.get_sum_date(7)
