@@ -15,19 +15,21 @@ class Calculator:
         self.records.append(record)
 
     def get_today_stats(self):
-        return sum(
+        count_today = sum(
             i.amount
             for i in self.records
             if i.date == dt.date.today()
         )
+        return count_today
 
     def get_week_stats(self):
         laft_week = dt.date.today() - dt.timedelta(days=7)
-        return sum(
+        count_week = sum(
             i.amount
             for i in self.records
             if laft_week <= i.date <= dt.date.today()
         )
+        return count_week
 
 
 ''' Records
