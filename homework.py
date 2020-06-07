@@ -78,9 +78,9 @@ class CashCalculator(Calculator):
 
         if today_remained_in_currency > 0:
             return f'На сегодня осталось {today_remained_in_currency} {currency_name}'
-        elif cash_remained == 0:
+        if not cash_remained:
             return f'Денег нет, держись'
-        else:
+        if cash_remained < 0:
             return f'Денег нет, держись: твой долг - {abs(today_remained_in_currency)} {currency_name}'
 
 
