@@ -1,8 +1,8 @@
 import datetime as dt
 
 
-'''  Main сalculator'''
 class Calculator:
+    '''  Main сalculator'''
     def __init__(self, limit):
         '''Creates a parent class calculator.'''
         self.limit = limit
@@ -11,28 +11,27 @@ class Calculator:
     def add_record(self, record):
         self.records.append(record)
 
-    def get_today_stats(self):
+    def get_sum_date(self, day=None):
         date_now = dt.date.today()
+        laft_week = date_now - dt.timedelta(days=day)
         return sum(
             i.amount
             for i in self.records
             if i.date == date_now
-        )
-
-    def get_week_stats(self):
-        date_now = dt.date.today()
-        laft_week = date_now - dt.timedelta(days=7)
-        return sum(
-            i.amount
-            for i in self.records
             if laft_week <= i.date <= date_now
         )
+        
+
+    def get_today_stats(self):
+        return self.get_sum_date()
+
+    def get_week_stats(self):
+        return self.get_sum_date(7)
 
     def get_today_remained(self):
         return self.limit - self.get_today_stats()
 
 
-''' Records'''
 class Record:
     def __init__(self, amount, comment, date=None):
         '''Creates a class with records.'''
@@ -50,8 +49,8 @@ class Record:
         return f'("{self.amount}"), ("{self.comment}"), ("{self.date}")'
 
 
-''' Calculator for сash'''
 class CashCalculator(Calculator):
+    ''' Calculator for сash'''
 
     EURO_RATE = 77.0
     USD_RATE = 68.6
@@ -78,8 +77,8 @@ class CashCalculator(Calculator):
                f'твой долг - {abs(today_remained_in_currency)} {currency_name}')
 
 
-''' Calculator for сalories'''
 class CaloriesCalculator(Calculator):
+    ''' Calculator for сalories'''
     def get_calories_remained(self):
         '''Creates a class that counts calories inherited from the main class Calculator.'''
         calories_remained = self.get_today_remained()
