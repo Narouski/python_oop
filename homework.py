@@ -4,7 +4,7 @@ import datetime as dt
 '''  Main сalculator'''
 class Calculator:
     def __init__(self, limit):
-    '''Creates a parent class calculator.'''
+        '''Creates a parent class calculator.'''
         self.limit = limit
         self.records = []
 
