@@ -1,12 +1,10 @@
 import datetime as dt
 
 
+'''  Main сalculator
 
 
-'''
------------------------
-    Main сalculator
------------------------
+Creates a parent class calculator.
 '''
 class Calculator:
     def __init__(self, limit):
@@ -17,32 +15,31 @@ class Calculator:
         self.records.append(record)
 
     def get_today_stats(self):
-        get_today = 0
-        for i in self.records:
-            if i.date == dt.datetime.now().date():
-                get_today += i.amount
-        return get_today
+        return sum(
+            i.amount
+            for i in self.records
+            if i.date == dt.date.today()
+        )
 
     def get_week_stats(self):
-        count_week = 0
-        for i in self.records:
-            if i.date >= dt.date.today() - dt.timedelta(days=7):
-                count_week += i.amount
-        return count_week
+        laft_week = dt.date.today() - dt.timedelta(days=7)
+        return sum(
+            i.amount
+            for i in self.records
+            if laft_week <= i.date <= dt.date.today()
+        )
 
 
+''' Records
 
 
-'''
------------------------
-        Records
------------------------
+Creates a class with records.
 '''
 class Record:
     def __init__(self, amount, comment, date=None):
         self.amount = amount
         self.comment = comment
-        if date == None:
+        if not date:
             self.date = dt.datetime.now().date()
         else:
             self.date = dt.datetime.strptime(date, '%d.%m.%Y').date()
@@ -50,13 +47,14 @@ class Record:
     def __str__(self):
         return f'{self.amount} , {self.comment} , {self.date}'
 
+    def __repr__(self):
+        return f'("{self.amount}"), ("{self.comment}"), ("{self.date}")'
 
 
+''' Calculator for сash
 
-'''
----------------------------
-    Calculator for сash
----------------------------
+
+Creates a class that counts cash inherited from the main class Calculator.
 '''
 class CashCalculator(Calculator):
 
@@ -84,27 +82,20 @@ class CashCalculator(Calculator):
             return f'Денег нет, держись: твой долг - {abs(today_remained_in_currency)} {currency_name}'
 
 
+''' Calculator for сalories
+    
 
-
-'''
--------------------------------
-    Calculator for сalories
--------------------------------
+Creates a class that counts calories inherited from the main class Calculator.
 '''
 class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         calories_remained = self.limit - self.get_today_stats()
         if self.get_today_stats() <= self.limit:
             return ('Сегодня можно съесть что-нибудь ещё, '
-            f'но с общей калорийностью не более {calories_remained} кКал')
+                    f'но с общей калорийностью не более {calories_remained} кКал')
         else:
             return 'Хватит есть!'
 
 
-
-
 if __name__ == '__main__':
-
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec_())
+    pass
